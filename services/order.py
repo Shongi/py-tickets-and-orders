@@ -14,10 +14,8 @@ def create_order(
     date: str = None,
 ) -> Order:
     user = get_user_model().objects.get(username=username)
-    order = user.orders.create()
-    if date:
-        order.created_at = datetime.strptime(date, "%Y-%m-%d %H:%M")
-        order.save()
+    created_at_kwargs = {'created_at': datetime.strptime(date, "%Y-%m-%d %H:%M")} if date else {}
+    order = user.orders.create(**created_at_kwargs)
 
     for ticket in tickets:
         movie_session = get_movie_session_by_id(
