@@ -64,7 +64,7 @@ class CustomUserManager(BaseUserManager):
         username: str,
         password: str = None,
         **extra_fields,
-    ) -> User:
+    ) -> "User":
         if not username:
             raise ValueError("The username must be set")
         user = self.model(username=username, **extra_fields)
